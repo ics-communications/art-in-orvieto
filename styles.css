@@ -54,6 +54,8 @@ a:hover { color: var(--rubric); }
 .container { max-width: 1120px; margin-inline: auto; padding-inline: clamp(1.25rem, 4vw, 2.5rem); }
 section[id] { scroll-margin-top: 3.6rem; }
 .prose { max-width: var(--measure); }
+.narrow { max-width: 44rem; }
+.section-intro { margin-bottom: clamp(2rem, 4vw, 3rem); }
 
 /* ---------- Rubrics & thresholds ---------- */
 .rubric {
@@ -111,8 +113,6 @@ section[id] { scroll-margin-top: 3.6rem; }
 }
 .btn-solid { background: var(--heading); color: var(--paper); border: 1px solid var(--heading); }
 .btn-solid:hover { background: #2A4757; border-color: #2A4757; color: var(--paper); }
-.btn-outline { background: transparent; color: var(--heading); border: 1px solid var(--heading); }
-.btn-outline:hover { background: var(--heading); color: var(--paper); }
 .btn-small { padding: 0.5rem 1rem; font-size: 0.78rem; }
 
 /* ---------- Hero ---------- */
@@ -129,7 +129,6 @@ section[id] { scroll-margin-top: 3.6rem; }
   font-size: 0.85rem; font-weight: 600; letter-spacing: 0.34em; text-transform: uppercase; color: var(--rubric);
 }
 .wm-line2 { display: block; font-size: clamp(2rem, 5vw, 3.4rem); font-weight: 300; letter-spacing: 0.14em; color: var(--heading); line-height: 1.1; }
-.wm-line2 .in { font-style: italic; font-weight: 400; letter-spacing: 0.02em; color: var(--sage-deep); text-transform: none; margin-right: 0.35em; }
 .wm-line2 .o { font-weight: 700; color: var(--primary); }
 .hero-lede { font-size: 1.22rem; line-height: 1.55; max-width: 34em; }
 .hero-dates {
@@ -143,6 +142,7 @@ section[id] { scroll-margin-top: 3.6rem; }
 
 /* ---------- Plates ---------- */
 .plate { margin: 0; }
+.plate-below { margin-top: clamp(2.5rem, 5vw, 4rem); }
 .plate-frame { border: 1px solid var(--frame); padding: 10px; background: var(--paper); }
 .plate img { width: 100%; }
 .plate figcaption {
@@ -158,7 +158,6 @@ section[id] { scroll-margin-top: 3.6rem; }
 .on-tint h2, .on-tint h3 { color: var(--heading); }
 
 .two-col { display: grid; grid-template-columns: 7fr 5fr; gap: clamp(2rem, 5vw, 4.5rem); align-items: start; }
-.two-col.flip { grid-template-columns: 5fr 7fr; }
 
 .aside-note {
   margin-top: 2rem; padding-top: 1.1rem; border-top: 1px solid var(--gold-rule);
@@ -191,7 +190,6 @@ section[id] { scroll-margin-top: 3.6rem; }
 .options { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(2rem, 5vw, 4rem); margin-top: clamp(2.5rem, 5vw, 3.5rem); }
 .option { border-top: 3px solid var(--heading); padding-top: 1.4rem; }
 .option h3 { font-size: 1.3rem; }
-.option .num { font-weight: 300; font-size: 2.4rem; color: var(--primary); display: block; line-height: 1; margin-bottom: 0.5rem; }
 
 /* ---------- People ---------- */
 .people { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(2rem, 4vw, 3.5rem); }
@@ -220,6 +218,7 @@ section[id] { scroll-margin-top: 3.6rem; }
 .kal-table td:first-child::before { content: "✣"; position: absolute; left: 0; color: var(--gold); font-weight: 400; font-size: 0.95rem; }
 .kal-table .tba { font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; font-size: 0.88rem; color: var(--rubric); }
 .kal-table .was { display: block; font-size: 0.85rem; font-style: italic; color: var(--sage-deep); margin-top: 0.15rem; }
+.kal-table .kal-sub { display: block; font-weight: 400; font-size: 0.85rem; font-style: italic; color: var(--sage-deep); margin-top: 0.15rem; }
 .kal-note { margin-top: 1.6rem; font-size: 0.95rem; color: var(--sage-deep); }
 .kal-note strong { color: var(--heading); }
 
@@ -232,6 +231,7 @@ section[id] { scroll-margin-top: 3.6rem; }
 .fee-table td:last-child { text-align: right; font-weight: 600; color: var(--heading); white-space: nowrap; padding-left: 1rem; }
 .fee-table .fee-sub { display: block; font-size: 0.85rem; font-style: italic; color: var(--sage-deep); }
 .on-tint .fee-table .fee-sub { color: var(--ink); }
+.fee-note { font-size: 0.93rem; margin-top: 0.9rem; }
 .fees-fineprint { margin-top: clamp(2.5rem, 5vw, 3.5rem); columns: 2; column-gap: clamp(2.5rem, 6vw, 5rem); font-size: 0.93rem; line-height: 1.55; }
 .fees-fineprint h3 { font-size: 0.85rem; letter-spacing: 0.16em; text-transform: uppercase; margin-bottom: 0.6em; }
 .fees-fineprint > div { break-inside: avoid; margin-bottom: 1.4rem; }
