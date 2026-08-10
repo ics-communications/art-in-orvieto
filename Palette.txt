@@ -1,0 +1,43 @@
+Palette
+
+:root {
+  --color-primary:       #6089A9;
+  --color-primary-dark:  #35596D;
+  --color-secondary:     #869B92;
+
+  --color-background:    #FDFDFC;
+  --color-background-alt:#B0C4D4;
+  --color-warm:          #DADBC5;
+
+  --color-text:          #2D373C;
+
+  --color-accent-gold:   #C1AA5B;
+  --color-accent-rust:   #A65A38;
+}
+
+How I’d deploy it
+
+Main page background: #FDFDFC
+This keeps the site airy and lets the artwork carry visual complexity.
+
+Body text: #2D373C
+Much softer and more harmonious than pure black.
+
+Primary headings: #35596D
+It relates strongly to the darker blues in the painting while remaining highly legible.
+
+Primary CTA / links: #6089A9
+This is very close to the blue used in the large “O” and ICS logo, so it feels particularly native to the source design.
+
+Large coloured sections: #B0C4D4
+This is essentially the dominant blue field on the right side of the poster.
+
+Secondary sections: #DADBC5
+Useful for alternating backgrounds and introducing some of the warmth of the painting.
+
+Secondary text / eyebrows / tags: #668583 or #869B92
+These pick up the green-gray typography and painted tones.
+
+Tiny accents only: #C1AA5B and #A65A38
+Use these for things like rules, icons, hover flourishes, dates, or small badges. I would not make either one a major brand colour. Their effectiveness comes from being scarce.
+

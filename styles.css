@@ -1,0 +1,297 @@
+/* ART in Orvieto — a modern Book of Hours.
+   Palette per Palette.txt (binding). Type: Futura PT, self-hosted.
+   Maintainers: colors live in :root below; dates/fees live in index.html. */
+
+/* ---------- Fonts ---------- */
+@font-face { font-family: 'Futura PT'; src: url('fonts/futurapt-light.woff2') format('woff2'); font-weight: 300; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Futura PT'; src: url('fonts/futurapt-book.woff2') format('woff2'); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Futura PT'; src: url('fonts/futurapt-bookitalic.woff2') format('woff2'); font-weight: 400; font-style: italic; font-display: swap; }
+@font-face { font-family: 'Futura PT'; src: url('fonts/futurapt-medium.woff2') format('woff2'); font-weight: 500; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Futura PT'; src: url('fonts/futurapt-demi.woff2') format('woff2'); font-weight: 600; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Futura PT'; src: url('fonts/futurapt-bold.woff2') format('woff2'); font-weight: 700; font-style: normal; font-display: swap; }
+
+/* ---------- Tokens ---------- */
+:root {
+  --paper: #FDFDFC;
+  --ink: #2D373C;
+  --heading: #35596D;
+  --primary: #6089A9;
+  --field-blue: #B0C4D4;
+  --field-warm: #DADBC5;
+  --sage: #869B92;
+  --sage-deep: #566A66;   /* sage darkened for small text on paper (contrast) */
+  --heading-deep: #2A4757; /* heading darkened for small text on tinted fields (contrast) */
+  --rubric: #A65A38;      /* rust — rubrication only */
+  --gold: #C1AA5B;        /* gold — hairlines, ornament */
+  --gold-rule: rgba(193, 170, 91, 0.55);
+  --frame: rgba(53, 89, 109, 0.28);
+  --measure: 62ch;
+}
+
+/* ---------- Reset & ground ---------- */
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+@media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
+body {
+  margin: 0;
+  font-family: 'Futura PT', 'Century Gothic', 'Twentieth Century', Futura, 'Trebuchet MS', sans-serif;
+  font-weight: 400;
+  font-size: 1.125rem;
+  line-height: 1.65;
+  color: var(--ink);
+  background: var(--paper);
+}
+img { max-width: 100%; height: auto; display: block; }
+h1, h2, h3, h4 { color: var(--heading); line-height: 1.12; margin: 0 0 0.6em; text-wrap: balance; font-weight: 700; }
+p { margin: 0 0 1.1em; }
+p:last-child { margin-bottom: 0; }
+a { color: var(--heading); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; text-decoration-color: var(--primary); transition: color 160ms ease; }
+a:hover { color: var(--rubric); }
+:focus-visible { outline: 2px solid var(--primary); outline-offset: 3px; border-radius: 1px; }
+.skip-link { position: absolute; left: -9999px; top: 0; background: var(--heading); color: var(--paper); padding: 0.6rem 1rem; z-index: 100; }
+.skip-link:focus { left: 0.5rem; top: 0.5rem; }
+
+.container { max-width: 1120px; margin-inline: auto; padding-inline: clamp(1.25rem, 4vw, 2.5rem); }
+section[id] { scroll-margin-top: 3.6rem; }
+.prose { max-width: var(--measure); }
+
+/* ---------- Rubrics & thresholds ---------- */
+.rubric {
+  font-size: 0.8rem; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--rubric); display: block;
+}
+.threshold { margin-bottom: clamp(2rem, 5vw, 3.25rem); }
+.threshold .rubric { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.1rem; }
+.threshold .rubric::after { content: ""; flex: 1; height: 1px; background: var(--gold-rule); transform-origin: left; }
+.threshold h2 { font-size: clamp(2rem, 4.5vw, 3rem); margin: 0; }
+.on-tint .rubric { color: var(--heading-deep); }
+.on-tint a { color: var(--heading-deep); }
+.on-tint a:hover { color: var(--ink); }
+
+/* One authored motion: crossing a threshold inks the rubric and draws its rule. */
+@media (prefers-reduced-motion: no-preference) {
+  .threshold .rubric { opacity: 0; transition: opacity 600ms cubic-bezier(0.16, 1, 0.3, 1); }
+  .threshold .rubric::after { transform: scaleX(0); transition: transform 900ms 150ms cubic-bezier(0.16, 1, 0.3, 1); }
+  .threshold.seen .rubric { opacity: 1; }
+  .threshold.seen .rubric::after { transform: scaleX(1); }
+  .reveal { opacity: 0; transform: translateY(14px); transition: opacity 700ms cubic-bezier(0.16, 1, 0.3, 1), transform 700ms cubic-bezier(0.16, 1, 0.3, 1); }
+  .reveal.seen { opacity: 1; transform: none; }
+}
+
+/* Versal initial — Book-of-Hours drop cap */
+.versal::first-letter {
+  float: left;
+  font-size: 3.3em; line-height: 0.82;
+  font-weight: 700; color: var(--rubric);
+  padding: 0.06em 0.14em 0 0;
+}
+
+/* ---------- Header / nav ---------- */
+.site-head {
+  position: sticky; top: 0; z-index: 50;
+  background: rgba(253, 253, 252, 0.94);
+  backdrop-filter: blur(6px);
+  border-bottom: 1px solid var(--gold-rule);
+}
+.site-head .container { display: flex; align-items: center; gap: 1.5rem; min-height: 3.6rem; }
+.brand { font-weight: 700; color: var(--heading); text-decoration: none; letter-spacing: 0.04em; font-size: 1.05rem; white-space: nowrap; }
+.brand:hover { color: var(--heading); }
+.brand .o { color: var(--primary); }
+.site-nav { margin-left: auto; display: flex; align-items: center; gap: 1.4rem; }
+.site-nav a { font-size: 0.86rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; text-decoration: none; color: var(--ink); }
+.site-nav a:hover { color: var(--rubric); }
+.site-nav a.btn-solid, .site-nav a.btn-solid:hover { color: var(--paper); }
+.nav-toggle { display: none; }
+
+.btn {
+  display: inline-block; padding: 0.78rem 1.5rem;
+  font-family: inherit; font-size: 0.88rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase;
+  text-decoration: none; border-radius: 2px; cursor: pointer;
+  transition: background-color 180ms ease, color 180ms ease, border-color 180ms ease;
+}
+.btn-solid { background: var(--heading); color: var(--paper); border: 1px solid var(--heading); }
+.btn-solid:hover { background: #2A4757; border-color: #2A4757; color: var(--paper); }
+.btn-outline { background: transparent; color: var(--heading); border: 1px solid var(--heading); }
+.btn-outline:hover { background: var(--heading); color: var(--paper); }
+.btn-small { padding: 0.5rem 1rem; font-size: 0.78rem; }
+
+/* ---------- Hero ---------- */
+.hero { padding: clamp(3.5rem, 8vw, 6.5rem) 0 clamp(3.5rem, 7vw, 6rem); }
+.hero-grid { display: grid; grid-template-columns: 7fr 5fr; gap: clamp(2rem, 5vw, 4.5rem); align-items: center; }
+.hero .kicker { color: var(--sage-deep); font-size: 0.8rem; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 2.2rem; display: block; }
+.wordmark { margin: 0 0 1.6rem; }
+.wm-art {
+  display: block; font-size: clamp(4.2rem, 11vw, 7.5rem); font-weight: 700; letter-spacing: 0.02em;
+  color: var(--heading); line-height: 0.9;
+}
+.wm-expansion {
+  display: block; margin: 0.9rem 0 0.7rem;
+  font-size: 0.85rem; font-weight: 600; letter-spacing: 0.34em; text-transform: uppercase; color: var(--rubric);
+}
+.wm-line2 { display: block; font-size: clamp(2rem, 5vw, 3.4rem); font-weight: 300; letter-spacing: 0.14em; color: var(--heading); line-height: 1.1; }
+.wm-line2 .in { font-style: italic; font-weight: 400; letter-spacing: 0.02em; color: var(--sage-deep); text-transform: none; margin-right: 0.35em; }
+.wm-line2 .o { font-weight: 700; color: var(--primary); }
+.hero-lede { font-size: 1.22rem; line-height: 1.55; max-width: 34em; }
+.hero-dates {
+  display: flex; align-items: baseline; flex-wrap: wrap; gap: 0.4em 1em;
+  margin: 1.8rem 0 2.2rem; padding: 0.9rem 0;
+  border-top: 1px solid var(--gold-rule); border-bottom: 1px solid var(--gold-rule);
+  font-size: 0.88rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--heading);
+}
+.hero-dates .tba { color: var(--rubric); }
+.hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+/* ---------- Plates ---------- */
+.plate { margin: 0; }
+.plate-frame { border: 1px solid var(--frame); padding: 10px; background: var(--paper); }
+.plate img { width: 100%; }
+.plate figcaption {
+  margin-top: 0.7rem; font-size: 0.85rem; font-style: italic; color: var(--sage-deep); line-height: 1.45;
+}
+.on-tint .plate-frame { background: transparent; border-color: rgba(45, 55, 60, 0.3); }
+.on-tint .plate figcaption { color: var(--ink); }
+
+/* ---------- Sections ---------- */
+.section { padding: clamp(4rem, 9vw, 7.5rem) 0; }
+.section-tint-blue { background: var(--field-blue); }
+.section-tint-warm { background: var(--field-warm); }
+.on-tint h2, .on-tint h3 { color: var(--heading); }
+
+.two-col { display: grid; grid-template-columns: 7fr 5fr; gap: clamp(2rem, 5vw, 4.5rem); align-items: start; }
+.two-col.flip { grid-template-columns: 5fr 7fr; }
+
+.aside-note {
+  margin-top: 2rem; padding-top: 1.1rem; border-top: 1px solid var(--gold-rule);
+  font-size: 0.98rem; color: var(--sage-deep); max-width: 34em;
+}
+.aside-note strong { color: var(--heading); font-weight: 600; }
+.on-tint .aside-note { color: var(--ink); border-color: rgba(45, 55, 60, 0.3); }
+
+/* ---------- The Hours (seminar & residency) ---------- */
+.office { display: grid; grid-template-columns: minmax(9rem, 3fr) 9fr; gap: clamp(1.5rem, 4vw, 3.5rem); padding: clamp(2.2rem, 5vw, 3.5rem) 0; border-top: 1px solid var(--gold-rule); }
+.office:last-of-type { border-bottom: 1px solid var(--gold-rule); }
+.office-side .rubric { margin-bottom: 0.8rem; }
+.office-side h3 { font-size: 1.55rem; line-height: 1.2; }
+.office-side .leader { font-size: 0.95rem; color: var(--sage-deep); font-style: italic; }
+.office-side .leader a { color: var(--sage-deep); }
+.office-side .leader a:hover { color: var(--rubric); }
+.office-body { max-width: var(--measure); }
+.office-title { font-style: italic; font-weight: 500; color: var(--heading); }
+
+.excursions { margin-top: clamp(2.5rem, 5vw, 3.5rem); text-align: center; }
+.excursion-cities {
+  display: flex; justify-content: center; align-items: baseline; flex-wrap: wrap; gap: 0.6em 0;
+  font-weight: 300; font-size: clamp(1.7rem, 4vw, 2.6rem); letter-spacing: 0.18em; text-transform: uppercase; color: var(--heading);
+  margin: 0.6rem 0 1rem;
+}
+.excursion-cities .sep { color: var(--gold); font-weight: 400; margin: 0 0.55em; }
+.excursions p { max-width: 44em; margin-inline: auto; }
+
+/* Credit / audit — ruled manuscript columns */
+.options { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(2rem, 5vw, 4rem); margin-top: clamp(2.5rem, 5vw, 3.5rem); }
+.option { border-top: 3px solid var(--heading); padding-top: 1.4rem; }
+.option h3 { font-size: 1.3rem; }
+.option .num { font-weight: 300; font-size: 2.4rem; color: var(--primary); display: block; line-height: 1; margin-bottom: 0.5rem; }
+
+/* ---------- People ---------- */
+.people { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(2rem, 4vw, 3.5rem); }
+.person img { border-radius: 50%; border: 1px solid var(--frame); padding: 6px; background: var(--paper); width: min(11rem, 60%); margin-bottom: 1.3rem; }
+.person h3 { font-size: 1.35rem; margin-bottom: 0.15em; }
+.person .role { font-size: 0.82rem; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: var(--sage-deep); display: block; margin-bottom: 0.9rem; }
+.on-tint .person .role { color: var(--heading); }
+.person p { font-size: 1rem; line-height: 1.6; }
+.person .more { font-size: 0.95rem; }
+
+/* ---------- Stay ---------- */
+.stay-plate { max-width: 56rem; }
+.stay-cols { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(2rem, 5vw, 4.5rem); margin-top: clamp(2.5rem, 5vw, 3.5rem); }
+.list-head { font-size: 1.05rem; letter-spacing: 0.16em; text-transform: uppercase; }
+.ruled-list { list-style: none; margin: 0; padding: 0; max-width: var(--measure); }
+.ruled-list li { padding: 0.85rem 0 0.85rem 1.6rem; border-bottom: 1px solid var(--gold-rule); position: relative; }
+.ruled-list li::before { content: "✣"; position: absolute; left: 0; top: 0.85rem; color: var(--gold); font-size: 0.95rem; }
+.ruled-list li:first-child { border-top: 1px solid var(--gold-rule); }
+
+/* ---------- Kalendarium ---------- */
+.kalendarium { max-width: 52rem; margin-inline: auto; }
+.kal-table { width: 100%; border-collapse: collapse; }
+.kal-table th { text-align: left; font-size: 0.8rem; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--sage-deep); padding: 0 0 0.7rem; border-bottom: 2px solid var(--heading); }
+.kal-table td { padding: 1rem 0; border-bottom: 1px solid var(--gold-rule); vertical-align: baseline; }
+.kal-table td:first-child { font-weight: 600; color: var(--heading); padding-right: 2rem; padding-left: 1.7rem; position: relative; }
+.kal-table td:first-child::before { content: "✣"; position: absolute; left: 0; color: var(--gold); font-weight: 400; font-size: 0.95rem; }
+.kal-table .tba { font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; font-size: 0.88rem; color: var(--rubric); }
+.kal-table .was { display: block; font-size: 0.85rem; font-style: italic; color: var(--sage-deep); margin-top: 0.15rem; }
+.kal-note { margin-top: 1.6rem; font-size: 0.95rem; color: var(--sage-deep); }
+.kal-note strong { color: var(--heading); }
+
+/* ---------- Fees ---------- */
+.fees-groups { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(2rem, 5vw, 3.5rem) clamp(2.5rem, 6vw, 5rem); }
+.fee-group h3 { font-size: 1rem; letter-spacing: 0.16em; text-transform: uppercase; border-bottom: 2px solid var(--heading); padding-bottom: 0.55rem; margin-bottom: 0.4rem; }
+.on-tint .fee-group h3, .on-tint .fees-fineprint h3, .on-tint .fee-table td:last-child { color: var(--heading-deep); }
+.fee-table { width: 100%; border-collapse: collapse; font-size: 1.02rem; }
+.fee-table td { padding: 0.7rem 0; border-bottom: 1px solid rgba(45, 55, 60, 0.18); vertical-align: baseline; }
+.fee-table td:last-child { text-align: right; font-weight: 600; color: var(--heading); white-space: nowrap; padding-left: 1rem; }
+.fee-table .fee-sub { display: block; font-size: 0.85rem; font-style: italic; color: var(--sage-deep); }
+.on-tint .fee-table .fee-sub { color: var(--ink); }
+.fees-fineprint { margin-top: clamp(2.5rem, 5vw, 3.5rem); columns: 2; column-gap: clamp(2.5rem, 6vw, 5rem); font-size: 0.93rem; line-height: 1.55; }
+.fees-fineprint h3 { font-size: 0.85rem; letter-spacing: 0.16em; text-transform: uppercase; margin-bottom: 0.6em; }
+.fees-fineprint > div { break-inside: avoid; margin-bottom: 1.4rem; }
+.fees-fineprint ol { margin: 0; padding-left: 1.2rem; }
+.fees-fineprint ol li { margin-bottom: 0.5em; }
+
+/* ---------- Apply (innermost) ---------- */
+.apply { text-align: center; }
+.apply .inner { max-width: 40rem; margin-inline: auto; }
+.apply h2 { font-size: clamp(1.8rem, 3.5vw, 2.4rem); }
+.apply .threshold { margin-bottom: 1.8rem; }
+.apply .threshold .rubric { justify-content: center; }
+.apply .threshold .rubric::after { content: none; }
+.apply-ornament { color: var(--gold); font-size: 1.05rem; letter-spacing: 1.4em; padding-left: 1.4em; margin: 0 0 1.6rem; }
+.apply-steps { list-style: none; counter-reset: step; margin: 2.4rem 0; padding: 0; text-align: left; }
+.apply-steps li { counter-increment: step; display: grid; grid-template-columns: 3rem 1fr; gap: 1.2rem; padding: 1.1rem 0; border-top: 1px solid var(--gold-rule); }
+.apply-steps li:last-child { border-bottom: 1px solid var(--gold-rule); }
+.apply-steps li::before { content: counter(step, upper-roman); font-weight: 500; font-size: 1.3rem; letter-spacing: 0.15em; color: var(--rubric); line-height: 1.4; }
+.apply p { text-wrap: pretty; }
+.apply-actions { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; margin-top: 2.2rem; }
+.apply-contact { margin-top: 1.6rem; font-size: 0.95rem; color: var(--sage-deep); }
+
+/* ---------- Footer ---------- */
+.site-foot { background: var(--field-warm); padding: clamp(2.5rem, 6vw, 4rem) 0; margin-top: 0; }
+.foot-grid { display: grid; grid-template-columns: auto 1fr auto; gap: 2.5rem; align-items: start; }
+.foot-grid img { width: 220px; }
+.foot-contact { font-size: 0.95rem; line-height: 1.6; font-style: normal; }
+.foot-links { font-size: 0.88rem; text-align: right; line-height: 2; }
+.foot-legal { margin-top: 2.2rem; padding-top: 1.2rem; border-top: 1px solid rgba(45, 55, 60, 0.2); font-size: 0.85rem; color: var(--ink); display: flex; justify-content: space-between; gap: 1.5rem; flex-wrap: wrap; }
+
+/* ---------- Responsive ---------- */
+@media (max-width: 880px) {
+  .hero-grid, .two-col, .two-col.flip { grid-template-columns: 1fr; }
+  .hero-plate { max-width: 30rem; }
+  .two-col .plate { max-width: 34rem; }
+  .office { grid-template-columns: 1fr; gap: 1.2rem; }
+  .options, .fees-groups, .stay-cols { grid-template-columns: 1fr; }
+  .people { grid-template-columns: 1fr; max-width: 30rem; }
+  .fees-fineprint { columns: 1; }
+  .foot-grid { grid-template-columns: 1fr; gap: 1.6rem; }
+  .foot-links { text-align: left; }
+}
+@media (max-width: 760px) {
+  .nav-toggle {
+    display: block; margin-left: auto; background: none; border: 1px solid var(--heading); border-radius: 2px;
+    color: var(--heading); font-family: inherit; font-size: 0.8rem; font-weight: 600; letter-spacing: 0.14em;
+    text-transform: uppercase; padding: 0.45rem 0.9rem; cursor: pointer;
+  }
+  .site-nav {
+    display: none; position: absolute; top: 100%; left: 0; right: 0;
+    flex-direction: column; align-items: stretch; gap: 0;
+    background: var(--paper); border-bottom: 1px solid var(--gold-rule);
+    padding: 0.5rem 0 1rem;
+  }
+  .site-nav.open { display: flex; }
+  .site-nav a { padding: 0.7rem clamp(1.25rem, 4vw, 2.5rem); }
+  .site-nav .btn { margin: 0.6rem clamp(1.25rem, 4vw, 2.5rem) 0; text-align: center; }
+}
+
+@media print {
+  .site-head, .hero-actions, .apply-actions { display: none; }
+  body { font-size: 11pt; }
+}
