@@ -76,7 +76,7 @@
          otherwise the film plays here (youtube-nocookie, loaded only on click). -->
     <figure class="plate film reveal plate-below">
       <div class="plate-frame">
-        <a class="film-poster" href="https://www.youtube.com/watch?v=c9cxcmQOyDE" data-video="c9cxcmQOyDE" aria-label="Play “Orvieto”, a 3 minute 20 second film by a past participant">
+        <a class="film-poster" href="https://www.youtube.com/watch?v=c9cxcmQOyDE" data-video="c9cxcmQOyDE" aria-label="Play “Orvieto”, a 3 minute 20 second film made by a past participant as his culminating project">
           <img src="assets/orvieto-film.jpg" alt="" width="1280" height="534" loading="lazy">
           <span class="film-play" aria-hidden="true">
             <svg viewBox="0 0 64 64"><circle cx="32" cy="32" r="30.5"/><path d="M26 20.5 45 32 26 43.5z"/></svg>
@@ -85,7 +85,7 @@
       </div>
       <figcaption class="film-caption">
         <span class="film-title"><cite>Orvieto</cite> <span class="film-length">3:20</span></span>
-        <span>A month in the town, filmed by a past ART in Orvieto participant. <a href="https://www.youtube.com/watch?v=c9cxcmQOyDE">Watch on YouTube</a></span>
+        <span>A month in the town, completed as his ART in Orvieto culminating project. <a href="https://www.youtube.com/watch?v=c9cxcmQOyDE">Watch on YouTube</a></span>
       </figcaption>
     </figure>
   </div>
@@ -319,7 +319,7 @@
         <h3>Incidental Fees</h3>
         <table class="fee-table">
           <tr><td>Application fee <span class="fee-sub">non-refundable · due with your application</span></td><td>$90</td></tr>
-          <tr><td>Registration fee <span class="fee-sub">non-refundable · $25 per course, $50 for two courses</span></td><td>$25 / $50</td></tr>
+          <tr><td>Registration fee <span class="fee-sub">non-refundable · $25 for seminar, $25 for residency</span></td><td>$25 / $50</td></tr>
         </table>
       </div>
       <div class="fee-group">
@@ -370,7 +370,7 @@
               <tr><th scope="row">Room and meals <span class="slip-sub" data-out="room-label">shared room, 18 nights</span></th><td data-out="room">$2,700</td></tr>
               <tr><th scope="row">Excursions <span class="slip-sub">Rome, Assisi, and Florence</span></th><td data-out="excursion">$2,200</td></tr>
               <tr><th scope="row">Application fee</th><td data-out="application">$90</td></tr>
-              <tr><th scope="row">Registration fee <span class="slip-sub" data-out="registration-label">two courses</span></th><td data-out="registration">$50</td></tr>
+              <tr><th scope="row">Registration fee <span class="slip-sub" data-out="registration-label">seminar and residency, $25 each</span></th><td data-out="registration">$50</td></tr>
             </tbody>
             <tbody class="slip-aid" data-out="aid-rows" hidden></tbody>
             <tfoot>
@@ -677,7 +677,7 @@
       out('room').textContent = cad(roomFee);
       out('excursion').textContent = cad(+d.excursion);
       out('application').textContent = cad(+d.application);
-      out('registration-label').textContent = courses === 2 ? 'two courses' : 'one course';
+      out('registration-label').textContent = { both: 'seminar and residency, $25 each', seminar: 'seminar', studio: 'residency' }[program.value];
       out('registration').textContent = cad(registration);
 
       var aidRows = out('aid-rows');
