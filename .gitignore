@@ -1,3 +1,5 @@
 .render/node_modules/
 .render/package-lock.json
 ._*
+/info/
+hector-transcript.txt
