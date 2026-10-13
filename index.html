@@ -71,6 +71,23 @@
         <figcaption>A street in the centro storico, Orvieto.</figcaption>
       </figure>
     </div>
+
+    <!-- A past participant's film. The link opens YouTube if scripts are off;
+         otherwise the film plays here (youtube-nocookie, loaded only on click). -->
+    <figure class="plate film reveal plate-below">
+      <div class="plate-frame">
+        <a class="film-poster" href="https://www.youtube.com/watch?v=c9cxcmQOyDE" data-video="c9cxcmQOyDE" aria-label="Play “Orvieto”, a 3 minute 20 second film by a past participant">
+          <img src="assets/orvieto-film.jpg" alt="" width="1280" height="534" loading="lazy">
+          <span class="film-play" aria-hidden="true">
+            <svg viewBox="0 0 64 64"><circle cx="32" cy="32" r="30.5"/><path d="M26 20.5 45 32 26 43.5z"/></svg>
+          </span>
+        </a>
+      </div>
+      <figcaption class="film-caption">
+        <span class="film-title"><cite>Orvieto</cite> <span class="film-length">3:20</span></span>
+        <span>A month in the town, filmed by a past ART in Orvieto participant. <a href="https://www.youtube.com/watch?v=c9cxcmQOyDE">Watch on YouTube</a></span>
+      </figcaption>
+    </figure>
   </div>
 </section>
 
@@ -188,7 +205,7 @@
       <div>
         <h3 class="list-head">Accommodation</h3>
         <ul class="ruled-list">
-          <li>Rooms are single or double occupancy, always with single (twin) beds, plus a desk and chair and a private en suite bathroom; towels and bedding provided.</li>
+          <li>Rooms are shared (two participants to a room) or single, always with single (twin) beds, plus a desk and chair and a private en suite bathroom; towels and bedding provided.</li>
           <li>Indicate your room preference on the application form; preferences are honoured as room availability at the monastery allows. Single rooms are limited.</li>
           <li>Air conditioning in some of the convent's public spaces during the summer months; all rooms are provided with fans. Wifi in guest rooms and public spaces.</li>
         </ul>
@@ -275,11 +292,12 @@
       <span class="rubric">VII &nbsp;·&nbsp; Fees &amp; Financial Assistance</span>
       <h2>What it costs, plainly</h2>
     </header>
-    <p class="narrow section-intro">All fees are listed in Canadian dollars (CAD) and are paid directly to the Institute for Christian Studies (ICS).</p>
-    <!-- MAINTAINERS: Summer 2027 fees. When any fee changes, redo the sums in
-         "Adding it up" below and the room prices in the form's room choices. The
-         application fee also appears in the application steps, the form's fee line,
-         and application.js (FEE). -->
+    <p class="narrow section-intro">All fees are listed in Canadian dollars (CAD) and are paid directly to the Institute for Christian Studies (ICS). To see your own total, <a href="#cost">work out your cost</a> below.</p>
+    <!-- MAINTAINERS: Summer 2027 fees. When any fee changes, also update the
+         data-* amounts in the calculator ("Work out your cost") below, and the room
+         prices in the form's room choices. The calculator recalculates its slip
+         itself from those data-* amounts. The application fee also appears in the
+         application steps, the form's fee line, and application.js (FEE). -->
     <div class="fees-groups">
       <div class="fee-group">
         <h3>Tuition</h3>
@@ -312,14 +330,61 @@
       </div>
     </div>
 
-    <div class="totals">
-      <h3 class="ledger-title">Adding it up</h3>
-      <table class="fee-table totals-table">
-        <tr><td>Seminar <em>or</em> Studio Residency, audit, shared room <span class="fee-sub">tuition $1,250 · room and meals $2,700 · excursions $2,200 · application and registration $115</span></td><td>$6,265</td></tr>
-        <tr><td>Seminar <em>plus</em> Studio Residency, audit, shared room <span class="fee-sub">tuition $2,500 · room and meals $2,700 · excursions $2,200 · application and registration $140</span></td><td>$7,540</td></tr>
-        <tr><td>Seminar <em>plus</em> Studio Residency, credit, shared room <span class="fee-sub">tuition $3,000 · room and meals $2,700 · excursions $2,200 · application and registration $140</span></td><td>$8,040</td></tr>
-      </table>
-      <p class="fee-note">A single room adds $1,350. Totals are before financial assistance, which can take up to $1,000 off, and do not include airfare or travel insurance.</p>
+    <!-- Fee calculator. Amounts come from the data-* attributes on the choices;
+         the slip below shows the default choices (both, audit, shared room) and is
+         recalculated by the script at the end of this page. -->
+    <div class="reckon" id="cost">
+      <h3 class="ledger-title">Work out your cost <span class="ledger-cad">in Canadian dollars (CAD)</span></h3>
+      <div class="reckon-grid">
+        <form class="reckon-choices" id="reckon" aria-label="Fee calculator" data-application="90" data-registration="25" data-excursion="2200" data-aid-max="1000">
+          <fieldset class="choice-group">
+            <legend class="q">What will you take?</legend>
+            <label class="choice"><input type="radio" name="r-program" value="both" data-courses="2" data-credit="3000" data-audit="2500" checked><span><strong>The Seminar and the Studio Residency</strong></span></label>
+            <label class="choice"><input type="radio" name="r-program" value="seminar" data-courses="1" data-credit="1500" data-audit="1250"><span><strong>The Graduate Seminar only</strong></span></label>
+            <label class="choice"><input type="radio" name="r-program" value="studio" data-courses="1" data-credit="1500" data-audit="1250"><span><strong>The Studio Residency only</strong></span></label>
+          </fieldset>
+          <fieldset class="choice-group">
+            <legend class="q">For credit, or audit?</legend>
+            <label class="choice"><input type="radio" name="r-credit" value="credit"><span><strong>Graduate credit</strong></span></label>
+            <label class="choice"><input type="radio" name="r-credit" value="audit" checked><span><strong>Audit</strong><em>Not for credit</em></span></label>
+          </fieldset>
+          <fieldset class="choice-group">
+            <legend class="q">Your room</legend>
+            <label class="choice"><input type="radio" name="r-room" value="shared" data-price="2700" checked><span><strong>Shared room</strong><em>Two participants share each room</em></span></label>
+            <label class="choice"><input type="radio" name="r-room" value="single" data-price="4050"><span><strong>Single room</strong><em>Only three are available</em></span></label>
+          </fieldset>
+          <fieldset class="choice-group">
+            <legend class="q">Financial assistance <span class="q-note">if you expect it; see <a href="#aid">who qualifies</a></span></legend>
+            <label class="choice"><input type="checkbox" name="r-earlybird" data-amount="500"><span><strong>Early Bird scholarship</strong><em>Apply by January 31, 2027 · first come, first served</em></span></label>
+            <label class="choice"><input type="checkbox" name="r-grant" data-amount="500"><span><strong>Financial need grant</strong><em>Graduate students for credit, K–12 teachers, professional artists</em></span></label>
+          </fieldset>
+          <div class="reckon-peek" aria-hidden="true"><span>Your total</span> <strong><span class="cad-mark">CAD</span> <span data-out="peek">$7,540</span></strong></div>
+        </form>
+
+        <div class="reckon-slip">
+          <h4 class="slip-title">Your estimate <span class="slip-cad">CAD</span></h4>
+          <table class="slip-table">
+            <caption class="sr-only">Your estimated fees, in Canadian dollars</caption>
+            <tbody>
+              <tr><th scope="row">Tuition <span class="slip-sub" data-out="tuition-label">Seminar and Studio Residency, audit</span></th><td data-out="tuition">$2,500</td></tr>
+              <tr><th scope="row">Room and meals <span class="slip-sub" data-out="room-label">shared room, 18 nights</span></th><td data-out="room">$2,700</td></tr>
+              <tr><th scope="row">Excursions <span class="slip-sub">Rome, Assisi, and Florence</span></th><td data-out="excursion">$2,200</td></tr>
+              <tr><th scope="row">Application fee</th><td data-out="application">$90</td></tr>
+              <tr><th scope="row">Registration fee <span class="slip-sub" data-out="registration-label">two courses</span></th><td data-out="registration">$50</td></tr>
+            </tbody>
+            <tbody class="slip-aid" data-out="aid-rows" hidden></tbody>
+            <tfoot>
+              <tr class="slip-total"><th scope="row">Your total <span class="slip-sub">in Canadian dollars</span></th><td><span class="cad-mark">CAD</span> <span data-out="total">$7,540</span></td></tr>
+            </tfoot>
+          </table>
+          <dl class="slip-when">
+            <div><dt>With your application</dt><dd>CAD <span data-out="now">$90</span></dd></div>
+            <div><dt>By May 15, 2027</dt><dd>CAD <span data-out="later">$7,450</span></dd></div>
+          </dl>
+          <p class="sr-only" aria-live="polite" data-out="announce"></p>
+          <p class="slip-note" data-out="note">All amounts are in Canadian dollars (CAD). Airfare and travel insurance are not included.</p>
+        </div>
+      </div>
     </div>
 
     <div class="aid" id="aid">
@@ -565,6 +630,74 @@
     document.querySelectorAll('.threshold, .reveal').forEach(function (el) { io.observe(el); });
   } else {
     document.querySelectorAll('.threshold, .reveal').forEach(function (el) { el.classList.add('seen'); });
+  }
+
+  // The film: swap the poster for the player on click (no YouTube requests before that)
+  document.querySelectorAll('.film-poster').forEach(function (poster) {
+    poster.addEventListener('click', function (e) {
+      if (e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) return;
+      e.preventDefault();
+      var frame = document.createElement('iframe');
+      frame.src = 'https://www.youtube-nocookie.com/embed/' + poster.dataset.video + '?autoplay=1&rel=0';
+      frame.title = 'Orvieto, a film by a past participant';
+      frame.allow = 'autoplay; encrypted-media; picture-in-picture; fullscreen';
+      frame.allowFullscreen = true;
+      frame.className = 'film-player';
+      poster.closest('.film').classList.add('playing');
+      poster.replaceWith(frame);
+      frame.focus();
+    });
+  });
+
+  // Fee calculator: amounts live in the data-* attributes of #reckon
+  var reckon = document.getElementById('reckon');
+  if (reckon) {
+    var cad = function (n) { return (n < 0 ? '−$' : '$') + Math.abs(n).toLocaleString('en-CA'); };
+    var out = function (key) { return document.querySelector('[data-out="' + key + '"]'); };
+    var picked = function (name) { return reckon.querySelector('input[name="' + name + '"]:checked'); };
+    var update = function () {
+      var d = reckon.dataset;
+      var program = picked('r-program'), credit = picked('r-credit').value, room = picked('r-room');
+      var courses = +program.dataset.courses;
+      var tuition = +program.dataset[credit];
+      var roomFee = +room.dataset.price;
+      var registration = courses * d.registration;
+      var subtotal = tuition + roomFee + (+d.excursion) + (+d.application) + registration;
+
+      var aid = [], aidTotal = 0;
+      reckon.querySelectorAll('input[type="checkbox"]:checked').forEach(function (box) {
+        var amount = Math.min(+box.dataset.amount, d.aidMax - aidTotal);
+        if (amount > 0) { aidTotal += amount; aid.push([box.closest('.choice').querySelector('strong').textContent, amount]); }
+      });
+      var total = subtotal - aidTotal;
+
+      out('tuition-label').textContent = program.closest('.choice').querySelector('strong').textContent.replace(/^The /, '') + ', ' + (credit === 'credit' ? 'for credit' : 'audit');
+      out('tuition').textContent = cad(tuition);
+      out('room-label').textContent = (room.value === 'single' ? 'single room' : 'shared room') + ', 18 nights';
+      out('room').textContent = cad(roomFee);
+      out('excursion').textContent = cad(+d.excursion);
+      out('application').textContent = cad(+d.application);
+      out('registration-label').textContent = courses === 2 ? 'two courses' : 'one course';
+      out('registration').textContent = cad(registration);
+
+      var aidRows = out('aid-rows');
+      aidRows.innerHTML = '';
+      aid.forEach(function (row) {
+        var tr = document.createElement('tr'), th = document.createElement('th'), td = document.createElement('td');
+        th.scope = 'row'; th.textContent = row[0]; td.textContent = cad(-row[1]);
+        tr.append(th, td); aidRows.append(tr);
+      });
+      aidRows.hidden = !aid.length;
+
+      out('total').textContent = cad(total);
+      out('peek').textContent = cad(total);
+      out('now').textContent = cad(+d.application);
+      out('later').textContent = cad(total - d.application);
+      out('note').textContent = 'All amounts are in Canadian dollars (CAD). Airfare and travel insurance are not included.' +
+        (aid.length ? ' Assistance is not guaranteed: scholarships go to the first eight eligible applicants, and grants are decided with admission.' : '');
+    };
+    reckon.addEventListener('change', function () { update(); out('announce').textContent = 'Estimated total ' + out('total').textContent + ' Canadian'; });
+    update();
   }
 </script>
 <script src="application.js" defer></script>

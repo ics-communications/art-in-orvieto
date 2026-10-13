@@ -51,13 +51,13 @@ p:last-child { margin-bottom: 0; }
 a { color: var(--heading); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; text-decoration-color: var(--primary); transition: color 160ms ease; }
 a:hover { color: var(--rubric); }
 :focus-visible { outline: 2px solid var(--primary); outline-offset: 3px; border-radius: 1px; }
-.skip-link { position: absolute; left: -9999px; top: 0; background: var(--heading); color: var(--paper); padding: 0.6rem 1rem; z-index: 100; }
+.skip-link { position: absolute; left: -9999px; top: 0; background: var(--heading); color: var(--paper); padding: 0.6rem 1rem; z-index: 1001; }
 .skip-link:focus { left: 0.5rem; top: 0.5rem; }
 .skip-link:hover { color: var(--paper); }
 
 .container { max-width: 1120px; margin-inline: auto; padding-inline: clamp(1.25rem, 4vw, 2.5rem); }
 section[id] { scroll-margin-top: 3.6rem; }
-#aid, #application { scroll-margin-top: 5rem; } /* anchors inside sections clear the sticky header */
+#aid, #cost, #application { scroll-margin-top: 5rem; } /* anchors inside sections clear the sticky header */
 .prose { max-width: var(--measure); }
 .narrow { max-width: 44rem; }
 .section-intro { margin-bottom: clamp(2rem, 4vw, 3rem); }
@@ -95,7 +95,7 @@ section[id] { scroll-margin-top: 3.6rem; }
 
 /* ---------- Header / nav ---------- */
 .site-head {
-  position: sticky; top: 0; z-index: 50;
+  position: sticky; top: 0; z-index: 1000; /* above the PayPal button iframes */
   background: rgba(253, 253, 252, 0.94);
   backdrop-filter: blur(6px);
   border-bottom: 1px solid var(--gold-rule);
@@ -160,6 +160,26 @@ section[id] { scroll-margin-top: 3.6rem; }
 }
 .on-tint .plate-frame { background: transparent; border-color: rgba(45, 55, 60, 0.3); }
 .on-tint .plate figcaption { color: var(--ink); }
+
+/* The film: a cinematic plate. The poster is a link to YouTube; the script swaps in
+   the player on click. */
+.film .plate-frame { position: relative; }
+.film-poster { display: block; position: relative; overflow: hidden; background: var(--ink); }
+.film-poster img { display: block; aspect-ratio: 1280 / 534; object-fit: cover; transition: transform 900ms cubic-bezier(0.16, 1, 0.3, 1), filter 300ms ease; }
+.film-poster:hover img { transform: scale(1.015); filter: brightness(0.94); }
+.film-play { position: absolute; inset: 0; display: grid; place-items: center; pointer-events: none; }
+.film-play svg { width: clamp(3.5rem, 7vw, 5.25rem); height: auto; filter: drop-shadow(0 4px 14px rgba(45, 55, 60, 0.35)); transition: transform 300ms cubic-bezier(0.16, 1, 0.3, 1); }
+.film-play circle { fill: rgba(253, 253, 252, 0.94); }
+.film-play path { fill: var(--heading); transition: fill 160ms ease; }
+.film-poster:hover .film-play svg { transform: scale(1.06); }
+.film-poster:hover .film-play path { fill: var(--rubric); }
+.film-poster:focus-visible { outline: 2px solid var(--primary); outline-offset: 4px; }
+.film-player { display: block; width: 100%; aspect-ratio: 16 / 9; border: 0; background: var(--ink); }
+.film-caption { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.3rem 1.2rem; }
+.film-title { font-style: normal; }
+.film-title cite { font-style: normal; font-weight: 600; font-size: 0.8rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--heading); }
+.film-length { margin-left: 0.5rem; font-style: normal; font-size: 0.8rem; letter-spacing: 0.08em; color: var(--sage-deep); font-variant-numeric: tabular-nums; }
+@media (prefers-reduced-motion: reduce) { .film-poster img, .film-play svg { transition: none; } .film-poster:hover img, .film-poster:hover .film-play svg { transform: none; } }
 
 /* ---------- Sections ---------- */
 .section { padding: clamp(4rem, 9vw, 7.5rem) 0; }
@@ -242,11 +262,58 @@ section[id] { scroll-margin-top: 3.6rem; }
 .fee-table .fee-sub { display: block; font-size: 0.85rem; font-style: italic; color: var(--sage-deep); }
 .on-tint .fee-table .fee-sub { color: var(--ink); }
 .fee-note { font-size: 0.93rem; margin-top: 0.9rem; }
-/* Sample totals and financial assistance: ledgers under the fees, each opened by a
+/* Calculator and financial assistance: ledgers under the fees, each opened by a
    gold-ruled title. Assistance is laid on the field as a paper leaf, so money coming
    back never reads as one more charge. */
-.totals, .before-travel { margin-top: clamp(3rem, 6vw, 4.5rem); }
-.totals-table td:last-child { font-size: 1.15rem; }
+.reckon, .before-travel { margin-top: clamp(3rem, 6vw, 4.5rem); }
+
+/* Fee calculator: ruled choices on the field, the reckoning on a paper slip */
+.reckon-grid { display: grid; grid-template-columns: 7fr 5fr; gap: clamp(2rem, 5vw, 4.5rem); align-items: start; }
+.reckon-choices fieldset { border: 0; margin: 0 0 2rem; padding: 0; min-width: 0; }
+.reckon-choices fieldset:last-child { margin-bottom: 0; }
+.reckon-choices legend { display: block; width: 100%; padding: 0; margin-bottom: 0.6rem; font-size: 1rem; font-weight: 600; color: var(--heading-deep); }
+.reckon-choices .q-note { font-weight: 400; font-size: 0.9rem; color: var(--ink); margin-left: 0.35rem; }
+.reckon-choices legend + .choice { border-top: 1px solid rgba(45, 55, 60, 0.18); }
+.reckon-choices .choice { border-bottom-color: rgba(45, 55, 60, 0.18); padding-block: 0.7rem; }
+.reckon-choices .choice:hover { background: rgba(253, 253, 252, 0.3); }
+.reckon-choices .choice:has(input:checked) { background: rgba(253, 253, 252, 0.55); }
+.reckon-choices .choice em { color: var(--ink); }
+.choice input[type="checkbox"] { border-radius: 2px; }
+.choice input[type="checkbox"]::before {
+  width: 0.34rem; height: 0.62rem; border-radius: 0; background: none;
+  border: solid var(--paper); border-width: 0 2px 2px 0; margin-top: -0.12rem;
+  transform: rotate(45deg) scale(0);
+}
+.choice input[type="checkbox"]:checked { background: var(--heading); }
+.choice input[type="checkbox"]:checked::before { transform: rotate(45deg) scale(1); }
+
+.reckon-slip {
+  position: sticky; top: 5.5rem;
+  background: var(--paper); border: 1px solid var(--frame); padding: clamp(1.4rem, 3vw, 2.2rem);
+  box-shadow: 0 1px 2px rgba(45, 55, 60, 0.04), 0 12px 24px -16px rgba(45, 55, 60, 0.18);
+}
+.slip-title { font-size: 1rem; letter-spacing: 0.16em; text-transform: uppercase; border-bottom: 2px solid var(--heading); padding-bottom: 0.55rem; margin-bottom: 0.2rem; }
+.reckon .ledger-title { flex-wrap: wrap; row-gap: 0.35rem; }
+.ledger-cad { font-size: 0.8rem; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: var(--heading-deep); white-space: nowrap; }
+.slip-title { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; }
+.slip-cad { font-size: 0.85rem; letter-spacing: 0.16em; padding: 0.15rem 0.45rem; border: 1px solid var(--heading); border-radius: 2px; line-height: 1.2; }
+.cad-mark { font-size: 0.42em; font-weight: 600; letter-spacing: 0.16em; vertical-align: 0.55em; margin-right: 0.1em; }
+.slip-when dd { white-space: nowrap; }
+.slip-table { width: 100%; border-collapse: collapse; font-size: 1rem; font-variant-numeric: tabular-nums; }
+.slip-table th, .slip-table td { padding: 0.6rem 0; border-bottom: 1px solid rgba(45, 55, 60, 0.14); vertical-align: baseline; }
+.slip-table th { text-align: left; font-weight: 400; color: var(--ink); }
+.slip-table td { text-align: right; font-weight: 600; color: var(--heading); white-space: nowrap; padding-left: 1rem; }
+.slip-sub { display: block; font-size: 0.85rem; font-style: italic; color: var(--sage-deep); }
+.slip-aid th { color: var(--heading); }
+.slip-total th, .slip-total td { border-top: 2px solid var(--heading); border-bottom: 0; padding-top: 0.9rem; }
+.slip-total th { font-weight: 600; color: var(--heading); letter-spacing: 0.02em; }
+.slip-total td { font-size: clamp(1.7rem, 3vw, 2.1rem); font-weight: 700; line-height: 1; }
+.slip-when { margin: 1rem 0 0; padding-top: 0.8rem; border-top: 1px solid var(--gold-rule); font-size: 0.93rem; }
+.slip-when div { display: flex; justify-content: space-between; gap: 1rem; padding: 0.15rem 0; }
+.slip-when dt { color: var(--sage-deep); }
+.slip-when dd { margin: 0; font-weight: 600; color: var(--heading); font-variant-numeric: tabular-nums; }
+.reckon-peek { display: none; }
+.slip-note { margin: 0.9rem 0 0; font-size: 0.85rem; line-height: 1.5; color: var(--sage-deep); }
 .aid {
   margin-top: clamp(3rem, 6vw, 4.5rem); padding: clamp(1.5rem, 4vw, 3rem);
   background: var(--paper); border: 1px solid var(--frame);
@@ -445,13 +512,22 @@ section[id] { scroll-margin-top: 3.6rem; }
   .hero-plate { max-width: 30rem; }
   .two-col .plate { max-width: 34rem; }
   .office { grid-template-columns: 1fr; gap: 1.2rem; }
-  .options, .fees-groups, .stay-cols { grid-template-columns: 1fr; }
+  .options, .fees-groups, .stay-cols, .reckon-grid { grid-template-columns: 1fr; }
+  .reckon-slip { position: static; }
+  .reckon-peek {
+    display: flex; justify-content: space-between; align-items: baseline; gap: 1rem;
+    position: sticky; bottom: 0; z-index: 5; margin: 1.5rem calc(-1 * clamp(1.25rem, 4vw, 2.5rem)) 0;
+    padding: 0.8rem clamp(1.25rem, 4vw, 2.5rem); background: var(--heading); color: var(--paper);
+    font-size: 0.85rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase;
+  }
+  .reckon-peek strong { font-size: 1.35rem; letter-spacing: 0.02em; font-variant-numeric: tabular-nums; }
   .people { grid-template-columns: 1fr; max-width: 30rem; }
   .fees-fineprint { columns: 1; }
   .foot-grid { grid-template-columns: 1fr; gap: 1.6rem; }
   .foot-links { text-align: left; }
 }
 @media (max-width: 620px) {
+  .film-poster img { aspect-ratio: 16 / 10; }
   .field-grid { grid-template-columns: 1fr; }
   .edu-row { grid-template-columns: 1fr 1fr; gap: 0.9rem 1rem; position: relative; padding-right: 0; }
   .edu-row .field:first-child { grid-column: 1 / -1; padding-right: 3rem; }

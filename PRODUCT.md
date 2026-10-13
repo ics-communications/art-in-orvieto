@@ -45,6 +45,7 @@ A seminar-plus-studio residency housed in a renovated 13th-century Servite monas
 ## Evidence on Hand
 
 - Full prior site copy in old/*.html (program description, seminar & residency descriptions, personnel bios, spaces, accommodation & meals, fees, application process, cancellation policy).
+- Film: "Orvieto" (3:20), made by a past participant during a month in the town: https://www.youtube.com/watch?v=c9cxcmQOyDE (poster frame saved as assets/orvieto-film.jpg).
 - Photos in old/*_files/: Orvieto Duomo facade, Orvieto streetscape (stone wall/flowers), monastery interior strip, meals strip, St. Patrick's Well interior (in old wordmark), leader headshots (Smick, Holt; McIntire was removed from the site for 2027).
 - No testimonials, enrollment statistics, or press on hand — do not fabricate any.
 
