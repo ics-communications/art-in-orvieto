@@ -1,0 +1,302 @@
+<!doctype html>
+<!--
+  ART in Orvieto: Perspective F26 back cover
+  Canvas: 2024 × 1425 CSS px, rendered at 2× = 4048 × 2850 px (same as F25-Back-Cover.png).
+
+  TWO VERSIONS FROM THIS ONE FILE
+    back-cover.html                       → with the Early Bird row (default)
+    back-cover.html?variant=standard      → without it
+
+  TO UPDATE THE DATES: edit the lines marked "✎ EDIT" below. When a value is confirmed,
+  also delete its data-placeholder attribute; the render script warns about any that remain.
+
+  TO MAKE THE PNGs (from the repo root):
+    node Perspective-F26/render.mjs
+  → Perspective-F26/F26-Back-Cover.png and Perspective-F26/F26-Back-Cover-Early-Bird.png
+-->
+<html lang="en" data-variant="early-bird">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ART in Orvieto · Perspective F26 back cover</title>
+<script>
+  // ?variant=standard hides the Early Bird row; ?render=1 turns off fit-to-window preview.
+  (function () {
+    var q = new URLSearchParams(location.search);
+    if (q.get('variant')) document.documentElement.dataset.variant = q.get('variant');
+    if (q.get('render')) document.documentElement.dataset.render = '';
+  })();
+</script>
+<style>
+  @font-face { font-family: 'Futura PT'; src: url('../fonts/futurapt-light.woff2') format('woff2'); font-weight: 300; }
+  @font-face { font-family: 'Futura PT'; src: url('../fonts/futurapt-book.woff2') format('woff2'); font-weight: 400; }
+  @font-face { font-family: 'Futura PT'; src: url('../fonts/futurapt-bookitalic.woff2') format('woff2'); font-weight: 400; font-style: italic; }
+  @font-face { font-family: 'Futura PT'; src: url('../fonts/futurapt-medium.woff2') format('woff2'); font-weight: 500; }
+  @font-face { font-family: 'Futura PT'; src: url('../fonts/futurapt-demi.woff2') format('woff2'); font-weight: 600; }
+  @font-face { font-family: 'Futura PT'; src: url('../fonts/futurapt-bold.woff2') format('woff2'); font-weight: 700; }
+
+  :root {
+    --paper: #FDFDFC;
+    --ink: #2D373C;
+    --heading: #35596D;
+    --primary: #6089A9;
+    --sage-deep: #566A66;
+    --rubric: #A65A38;
+    --gold: #C1AA5B;
+    --gold-rule: rgba(193, 170, 91, 0.7);
+
+    /* The arch's seat was searched against the painting: these values put its sides,
+       shoulders and crown over the least painted ink (x 934 → 1904, crown in the
+       gutter between the first and second rows). */
+    --arch-x: 934px;
+    --arch-w: 970px;
+    --arch-top: 134px;
+    --contour: 17px;
+    --shoulder: 330px;   /* the painted niches are flat-topped domes, not semicircles */
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { background: var(--ink); }
+  body {
+    min-height: 100vh; display: grid; place-items: center;
+    font-family: 'Futura PT', 'Futura', sans-serif;
+    color: var(--ink);
+    -webkit-font-smoothing: antialiased;
+    font-kerning: normal;
+  }
+  .nowrap { white-space: nowrap; }
+  ::selection { background: var(--primary); color: var(--paper); }
+
+  .cover {
+    position: relative; width: 2024px; height: 1425px; overflow: hidden;
+    background: var(--paper);
+    zoom: var(--fit, 1);
+  }
+  html[data-render] body { display: block; min-height: 0; }
+  html[data-render] .cover { zoom: 1; }
+
+  .painting {
+    position: absolute; top: 0; left: 0;
+    width: 2104px; height: 1425px; max-width: none;
+    display: block;
+  }
+
+  /* ── The opened niche ── */
+  .arch {
+    position: absolute; left: var(--arch-x); top: var(--arch-top);
+    width: var(--arch-w); bottom: -2px;
+    background: var(--paper);
+    border-radius: var(--shoulder) var(--shoulder) 0 0;
+  }
+  .arch::before {
+    content: ""; position: absolute; inset: var(--contour) var(--contour) -2px;
+    border: 1.5px solid var(--gold); border-bottom: 0;
+    border-radius: calc(var(--shoulder) - var(--contour)) calc(var(--shoulder) - var(--contour)) 0 0;
+    pointer-events: none;
+  }
+  .arch-inner {
+    position: relative; height: 100%;
+    display: flex; flex-direction: column; align-items: center; text-align: center;
+    padding: 116px 96px 0;
+  }
+
+  /* Wordmark: the website's lockup, set as an inscription in the crown */
+  .wordmark { display: flex; flex-direction: column; align-items: center; font-weight: 400; }
+  .wm-art {
+    font-size: 240px; font-weight: 700; letter-spacing: 0.02em; line-height: 0.74;
+    color: var(--heading); padding-left: 0.02em;
+  }
+  .wm-expansion {
+    margin-top: 32px;
+    font-size: 22px; font-weight: 600; letter-spacing: 0.34em; text-transform: uppercase;
+    color: var(--rubric); padding-left: 0.34em;
+  }
+  .wm-line2 {
+    margin-top: 16px;
+    font-size: 84px; font-weight: 300; letter-spacing: 0.14em; line-height: 1;
+    color: var(--heading); padding-left: 0.14em;
+  }
+  .wm-line2 .o { font-weight: 700; color: var(--primary); }
+
+  .middle { display: flex; flex-direction: column; align-items: center; }
+  .middle > .season { margin-top: 0; }
+  .wordmark { margin-bottom: 32px; }
+
+  /* Threshold rule: rubric between gold hairlines */
+  .season {
+    display: flex; align-items: center; gap: 22px; width: 600px;
+    margin-top: 32px;
+    font-size: 22px; font-weight: 600; letter-spacing: 0.24em; text-transform: uppercase;
+    color: var(--rubric); white-space: nowrap;
+  }
+  .season::before, .season::after { content: ""; flex: 1; height: 1.5px; background: var(--gold-rule); }
+  .season .flory { width: 22px; height: 22px; flex: none; }
+
+  .lede {
+    margin-top: 26px; max-width: 760px;
+    font-size: 29px; line-height: 1.42; font-weight: 400; color: var(--ink);
+    text-wrap: balance;
+  }
+
+  .cities {
+    margin-top: 18px;
+    display: flex; align-items: center; gap: 0;
+    font-size: 25px; font-weight: 400; letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--heading);
+  }
+  .cities .flory { width: 15px; height: 15px; margin: 0 0.85em 0 0.6em; }
+  .cities .star { letter-spacing: 0; color: var(--rubric); }
+
+  /* Kalendarium: ruled dates */
+  .kalendarium { width: 720px; margin-top: 30px; border-top: 1.5px solid var(--gold-rule); text-align: left; }
+  .kal-row {
+    display: flex; align-items: baseline; justify-content: space-between; gap: 24px;
+    padding: 12px 0 11px;
+    border-bottom: 1.5px solid var(--gold-rule);
+  }
+  .kal-row dt {
+    font-size: 21px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--sage-deep);
+  }
+  .kal-sub {
+    display: block; margin-top: 4px;
+    font-size: 23px; font-weight: 400; letter-spacing: 0; text-transform: none;
+    color: var(--ink);
+  }
+  .kal-row dd { font-size: 28px; font-weight: 600; color: var(--heading); white-space: nowrap; }
+  .kal-row dd.due { color: var(--rubric); }
+
+  [data-variant="standard"] .early-bird-only { display: none; }
+  [data-variant="early-bird"] .standard-only { display: none; }
+
+  /* The action: QR + address */
+  .action {
+    width: 720px;
+    display: flex; align-items: center; gap: 34px;
+    margin-top: 30px;
+    text-align: left;
+  }
+  .qr { width: 176px; height: 176px; flex: none; display: block; }
+  [data-variant="standard"] .qr { width: 204px; height: 204px; }
+  .action-label { display: block; font-size: 25px; font-weight: 400; color: var(--ink); }
+  .url {
+    display: block; margin-top: 2px;
+    font-size: 37px; font-weight: 600; letter-spacing: 0.005em; color: var(--heading);
+  }
+
+  /* Attribution at the foot of the niche */
+  .foot {
+    width: 720px;
+    margin-top: auto; margin-bottom: 68px;
+    display: flex; align-items: center; justify-content: space-between; gap: 26px;
+  }
+  /* Footnote to the asterisked cities, set just above the attribution */
+  .footnote {
+    width: 720px; margin-top: auto; padding-top: 24px; text-align: left;
+    font-size: 21px; font-style: italic; line-height: 1.35; color: var(--sage-deep);
+  }
+  .footnote .star { font-style: normal; color: var(--rubric); margin-right: 0.15em; }
+  .footnote + .foot { margin-top: 16px; }
+  /* the Early Bird row costs height; win back room for the footnote from the ruled rows */
+  [data-variant="early-bird"] .kalendarium { margin-top: 22px; }
+  [data-variant="early-bird"] .kal-row { padding: 10px 0 9px; }
+  [data-variant="early-bird"] .action { margin-top: 22px; }
+  /* the logo file carries 25px of transparent margin on the left; pull its ink onto the rule */
+  .foot img { height: 40px; width: auto; display: block; margin-left: -4.7px; }
+  .foot span { font-size: 21px; line-height: 1.35; color: var(--sage-deep); text-align: right; }
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <!-- Cross-flory: four balloon spokes, the site's list/ornament mark, drawn for print -->
+    <symbol id="flory" viewBox="-12 -12 24 24">
+      <g fill="#C1AA5B">
+        <path id="spoke" d="M0 -1.6C1.5 -3.6 3.3 -6.1 2.4 -8.7 1.8 -10.6 -1.8 -10.6 -2.4 -8.7 -3.3 -6.1 -1.5 -3.6 0 -1.6Z"/>
+        <use href="#spoke" transform="rotate(90)"/>
+        <use href="#spoke" transform="rotate(180)"/>
+        <use href="#spoke" transform="rotate(270)"/>
+        <circle r="1.25"/>
+      </g>
+    </symbol>
+  </defs>
+</svg>
+
+<main class="cover" aria-label="ART in Orvieto, Summer 2027: back cover of Perspective, Fall 2026">
+  <img class="painting" src="assets/f24-painting.jpg" alt="A painting of rows of domed, bell-like forms in blues, teals, umbers and ochres, each set in its own arched niche on a cream ground">
+
+  <section class="arch">
+    <div class="arch-inner">
+
+      <h1 class="wordmark">
+        <span class="wm-art">ART</span>
+        <span class="wm-expansion">Art · Religion · Theology</span>
+        <span class="wm-line2">in ORVIET<span class="o">O</span></span>
+      </h1>
+
+      <div class="middle">
+
+      <!-- ✎ EDIT: program year -->
+      <p class="season"><svg class="flory" aria-hidden="true"><use href="#flory"/></svg><span>Summer 2027</span><svg class="flory" aria-hidden="true"><use href="#flory"/></svg></p>
+
+      <p class="lede">A seminar and studio residency for artists, art teachers, and graduate students, in a <span class="nowrap">13th-century</span> monastery in Orvieto, Italy.</p>
+
+      <p class="cities">Rome<svg class="flory" aria-hidden="true"><use href="#flory"/></svg>Assisi<svg class="flory" aria-hidden="true"><use href="#flory"/></svg>Florence<span class="star">*</span></p>
+
+      <dl class="kalendarium">
+        <div class="kal-row">
+          <dt>In residence</dt>
+          <!-- ✎ EDIT: program dates -->
+          <dd>July 18 – August 5, 2027</dd>
+        </div>
+        <div class="kal-row early-bird-only">
+          <dt>Early Bird deadline
+            <!-- ✎ EDIT: scholarship terms (confirmed for 2027: eight $500 Ruth and Inès Memorial Scholarships, first come, first served) -->
+            <span class="kal-sub">for one of eight $500 scholarships</span>
+          </dt>
+          <!-- ✎ EDIT: Early Bird deadline -->
+          <dd class="due">January 31, 2027</dd>
+        </div>
+        <div class="kal-row">
+          <dt><span class="early-bird-only">Final application deadline</span><span class="standard-only">Apply by</span></dt>
+          <!-- ✎ EDIT: final application deadline -->
+          <dd class="due">March 31, 2027</dd>
+        </div>
+      </dl>
+
+      <div class="action">
+        <!-- QR code → https://art-in-orvieto.icscanada.edu (error correction Q). Regenerate if the address changes.
+             Its quiet zone is the open paper around it (keep ≥ 4 modules clear on every side). -->
+        <svg class="qr" viewBox="0 0 33 33" role="img" aria-label="QR code linking to art-in-orvieto.icscanada.edu" shape-rendering="crispEdges"><path fill="#2D373C" d="M0 0h7v1h-7zM8 0h3v1h-3zM12 0h1v1h-1zM15 0h1v1h-1zM17 0h4v1h-4zM23 0h1v1h-1zM26 0h7v1h-7zM0 1h1v1h-1zM6 1h1v1h-1zM10 1h1v1h-1zM13 1h1v1h-1zM15 1h3v1h-3zM22 1h1v1h-1zM26 1h1v1h-1zM32 1h1v1h-1zM0 2h1v1h-1zM2 2h3v1h-3zM6 2h1v1h-1zM9 2h2v1h-2zM12 2h1v1h-1zM15 2h4v1h-4zM20 2h1v1h-1zM24 2h1v1h-1zM26 2h1v1h-1zM28 2h3v1h-3zM32 2h1v1h-1zM0 3h1v1h-1zM2 3h3v1h-3zM6 3h1v1h-1zM14 3h1v1h-1zM20 3h5v1h-5zM26 3h1v1h-1zM28 3h3v1h-3zM32 3h1v1h-1zM0 4h1v1h-1zM2 4h3v1h-3zM6 4h1v1h-1zM8 4h1v1h-1zM13 4h2v1h-2zM17 4h2v1h-2zM24 4h1v1h-1zM26 4h1v1h-1zM28 4h3v1h-3zM32 4h1v1h-1zM0 5h1v1h-1zM6 5h1v1h-1zM8 5h1v1h-1zM11 5h3v1h-3zM15 5h3v1h-3zM20 5h1v1h-1zM22 5h1v1h-1zM26 5h1v1h-1zM32 5h1v1h-1zM0 6h7v1h-7zM8 6h1v1h-1zM10 6h1v1h-1zM12 6h1v1h-1zM14 6h1v1h-1zM16 6h1v1h-1zM18 6h1v1h-1zM20 6h1v1h-1zM22 6h1v1h-1zM24 6h1v1h-1zM26 6h7v1h-7zM9 7h1v1h-1zM12 7h5v1h-5zM21 7h1v1h-1zM1 8h7v1h-7zM13 8h3v1h-3zM17 8h2v1h-2zM20 8h1v1h-1zM24 8h1v1h-1zM27 8h2v1h-2zM32 8h1v1h-1zM2 9h1v1h-1zM8 9h1v1h-1zM11 9h1v1h-1zM13 9h1v1h-1zM16 9h1v1h-1zM18 9h4v1h-4zM23 9h1v1h-1zM26 9h2v1h-2zM29 9h4v1h-4zM0 10h1v1h-1zM2 10h1v1h-1zM6 10h2v1h-2zM10 10h6v1h-6zM18 10h1v1h-1zM20 10h2v1h-2zM25 10h1v1h-1zM28 10h1v1h-1zM30 10h2v1h-2zM1 11h4v1h-4zM7 11h2v1h-2zM15 11h2v1h-2zM20 11h3v1h-3zM28 11h5v1h-5zM0 12h1v1h-1zM2 12h2v1h-2zM5 12h2v1h-2zM9 12h3v1h-3zM15 12h1v1h-1zM18 12h1v1h-1zM21 12h1v1h-1zM23 12h1v1h-1zM25 12h1v1h-1zM27 12h3v1h-3zM0 13h1v1h-1zM3 13h3v1h-3zM7 13h2v1h-2zM10 13h2v1h-2zM13 13h4v1h-4zM20 13h1v1h-1zM22 13h2v1h-2zM26 13h1v1h-1zM30 13h3v1h-3zM0 14h2v1h-2zM4 14h3v1h-3zM9 14h1v1h-1zM11 14h1v1h-1zM14 14h1v1h-1zM17 14h1v1h-1zM19 14h1v1h-1zM21 14h2v1h-2zM24 14h3v1h-3zM29 14h1v1h-1zM31 14h1v1h-1zM0 15h2v1h-2zM3 15h3v1h-3zM12 15h3v1h-3zM17 15h6v1h-6zM25 15h3v1h-3zM29 15h2v1h-2zM1 16h3v1h-3zM6 16h1v1h-1zM8 16h2v1h-2zM12 16h2v1h-2zM17 16h3v1h-3zM22 16h1v1h-1zM24 16h2v1h-2zM27 16h2v1h-2zM32 16h1v1h-1zM5 17h1v1h-1zM7 17h1v1h-1zM9 17h4v1h-4zM15 17h6v1h-6zM23 17h2v1h-2zM26 17h2v1h-2zM29 17h2v1h-2zM32 17h1v1h-1zM0 18h1v1h-1zM5 18h2v1h-2zM8 18h2v1h-2zM14 18h1v1h-1zM16 18h1v1h-1zM18 18h1v1h-1zM20 18h1v1h-1zM22 18h1v1h-1zM24 18h1v1h-1zM27 18h2v1h-2zM30 18h2v1h-2zM1 19h2v1h-2zM8 19h2v1h-2zM14 19h1v1h-1zM17 19h1v1h-1zM25 19h1v1h-1zM27 19h5v1h-5zM1 20h2v1h-2zM4 20h3v1h-3zM8 20h1v1h-1zM10 20h5v1h-5zM18 20h5v1h-5zM24 20h1v1h-1zM27 20h3v1h-3zM32 20h1v1h-1zM0 21h5v1h-5zM13 21h2v1h-2zM16 21h1v1h-1zM23 21h1v1h-1zM26 21h1v1h-1zM30 21h1v1h-1zM32 21h1v1h-1zM0 22h1v1h-1zM2 22h1v1h-1zM5 22h2v1h-2zM9 22h1v1h-1zM11 22h1v1h-1zM16 22h2v1h-2zM20 22h1v1h-1zM22 22h1v1h-1zM27 22h3v1h-3zM31 22h1v1h-1zM0 23h1v1h-1zM5 23h1v1h-1zM10 23h2v1h-2zM14 23h3v1h-3zM21 23h2v1h-2zM25 23h1v1h-1zM28 23h3v1h-3zM0 24h1v1h-1zM2 24h2v1h-2zM5 24h3v1h-3zM9 24h1v1h-1zM11 24h1v1h-1zM13 24h1v1h-1zM17 24h1v1h-1zM22 24h1v1h-1zM24 24h5v1h-5zM31 24h1v1h-1zM8 25h1v1h-1zM10 25h2v1h-2zM17 25h8v1h-8zM28 25h1v1h-1zM30 25h1v1h-1zM32 25h1v1h-1zM0 26h7v1h-7zM8 26h2v1h-2zM12 26h1v1h-1zM14 26h2v1h-2zM21 26h1v1h-1zM23 26h2v1h-2zM26 26h1v1h-1zM28 26h1v1h-1zM30 26h2v1h-2zM0 27h1v1h-1zM6 27h1v1h-1zM8 27h4v1h-4zM13 27h3v1h-3zM17 27h8v1h-8zM28 27h3v1h-3zM32 27h1v1h-1zM0 28h1v1h-1zM2 28h3v1h-3zM6 28h1v1h-1zM8 28h1v1h-1zM10 28h1v1h-1zM13 28h2v1h-2zM16 28h1v1h-1zM21 28h1v1h-1zM24 28h6v1h-6zM31 28h2v1h-2zM0 29h1v1h-1zM2 29h3v1h-3zM6 29h1v1h-1zM8 29h2v1h-2zM12 29h1v1h-1zM14 29h1v1h-1zM16 29h1v1h-1zM20 29h3v1h-3zM25 29h1v1h-1zM28 29h1v1h-1zM30 29h1v1h-1zM32 29h1v1h-1zM0 30h1v1h-1zM2 30h3v1h-3zM6 30h1v1h-1zM8 30h4v1h-4zM13 30h1v1h-1zM17 30h3v1h-3zM24 30h4v1h-4zM29 30h2v1h-2zM0 31h1v1h-1zM6 31h1v1h-1zM8 31h1v1h-1zM12 31h1v1h-1zM16 31h6v1h-6zM25 31h2v1h-2zM28 31h3v1h-3zM0 32h7v1h-7zM13 32h3v1h-3zM19 32h2v1h-2zM22 32h3v1h-3zM26 32h2v1h-2zM31 32h1v1h-1z"/></svg>
+        <p>
+          <span class="action-label">Learn more and apply at</span>
+          <span class="url">art-in-orvieto.icscanada.edu</span>
+        </p>
+      </div>
+
+      </div>
+
+      <p class="footnote"><span class="star">*</span>ART in Orvieto includes excursions to these three historic locations.</p>
+      <footer class="foot">
+        <img src="../assets/ics-logo.png" alt="Institute for Christian Studies">
+        <span>An affiliate of the<br>Toronto School of Theology</span>
+      </footer>
+
+    </div>
+  </section>
+</main>
+
+<script>
+  // Preview only: scale the canvas to fit the window (the render script turns this off).
+  (function () {
+    if ('render' in document.documentElement.dataset) return;
+    function fit() {
+      var f = Math.min((innerWidth - 48) / 2024, (innerHeight - 48) / 1425, 1);
+      document.documentElement.style.setProperty('--fit', f.toFixed(4));
+    }
+    fit(); addEventListener('resize', fit);
+  })();
+</script>
+</body>
+</html>
