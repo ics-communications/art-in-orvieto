@@ -207,7 +207,7 @@
 
   var LABELS = {
     firstName: 'Enter your first name.', lastName: 'Enter your last name.', email: 'Enter your email address.',
-    phone: 'Enter a phone number.', street: 'Enter your street address.', city: 'Enter your city.',
+    phone: 'Enter a phone number.', dob: 'Enter your date of birth.', street: 'Enter your street address.', city: 'Enter your city.',
     region: 'Enter your province or state.', postal: 'Enter your postal or zip code.', country: 'Enter your country.',
     creditInstitution: 'Name the institution that will grant your credit.',
     seminarStatement: 'Write your statement for the Seminar.', residencyStatement: 'Write your statement for the Studio Residency.'
@@ -235,16 +235,26 @@
     $all('[aria-invalid]', form).forEach(function (e) { e.removeAttribute('aria-invalid'); e.removeAttribute('aria-errormessage'); });
   }
 
+  /** A YYYY-MM-DD date from 1920 up to 16 years ago. */
+  function plausibleBirthDate(v) {
+    var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(v);
+    if (!m) return false;
+    var born = new Date(+m[1], +m[2] - 1, +m[3]);
+    var latest = new Date(); latest.setFullYear(latest.getFullYear() - 16);
+    return born.getMonth() === +m[2] - 1 && +m[1] >= 1920 && born <= latest;
+  }
+
   /** Returns the first problem element, or null when the form is complete. */
   function validate() {
     clearErrors();
     var first = null;
     function fail(el, msg) { setError(el, msg); if (!first) first = el; }
 
-    ['firstName', 'lastName', 'email', 'phone', 'street', 'city', 'region', 'postal', 'country'].forEach(function (name) {
+    ['firstName', 'lastName', 'email', 'phone', 'dob', 'street', 'city', 'region', 'postal', 'country'].forEach(function (name) {
       if (!val(name)) fail(form.elements[name], LABELS[name]);
     });
     if (val('email') && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val('email'))) fail(form.elements.email, 'Check your email address; it should look like name@example.com.');
+    if (val('dob') && !plausibleBirthDate(val('dob'))) fail(form.elements.dob, 'Check your date of birth.');
 
     var edu = readEducation();
     var firstEduInput = eduRows.querySelector('input');
@@ -314,7 +324,7 @@
     var residency = c === 'residency' || c === 'both';
     var data = {
       ref: ref, orderId: paidOrderId,
-      firstName: val('firstName'), lastName: val('lastName'), email: val('email'), phone: val('phone'),
+      firstName: val('firstName'), lastName: val('lastName'), email: val('email'), phone: val('phone'), dob: val('dob'),
       street: val('street'), city: val('city'), region: val('region'), postal: val('postal'), country: val('country'),
       education: readEducation(),
       courses: c, credit: val('credit'), creditInstitution: val('credit') === 'credit' ? val('creditInstitution') : '',
